@@ -1,0 +1,16 @@
+{
+  "name": "uptask",
+  "private": true,
+  "version": "1.0.0",
+  "description": "MERN",
+  "main": "index.js",
+  "workspaces": ["backend", "frontend"],
+  "scripts": {
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev": "npm run dev:backend & npm run dev:frontend"
+  },
+  "keywords": [],
+  "author": "Agustin Gaggero",
+  "license": "ISC"
+}
