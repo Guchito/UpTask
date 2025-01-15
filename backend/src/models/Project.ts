@@ -24,4 +24,6 @@ const ProjectSchema: Schema = new Schema({
     }
  });
 
- const Project = mongoose.model<ProjectType>('Project', ProjectSchema); // Project is the name of the collection in the database
+const Project = mongoose.model<ProjectType>('Project', ProjectSchema); // Project is the name of the collection in the database
+
+export default Project
