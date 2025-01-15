@@ -12,9 +12,9 @@ export class ProjectController {
             res.send('Project created');
         }catch (error) {
             console.log(error);
+            res.status(500).send('Error creating project');
         }
         
-        res.send('Create project');
     }
     static getAllProjects = async (req: Request, res: Response) => {
         res.send('All projects');
