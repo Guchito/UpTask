@@ -10,3 +10,6 @@ Mongoose ODM
 
 ---
 MVC 
+REST API
+---
+Express validator
