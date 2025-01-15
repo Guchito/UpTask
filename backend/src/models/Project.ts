@@ -1,12 +1,14 @@
-import mongoose, { Schema , Document} from "mongoose";
+import mongoose, { Schema , Document, PopulatedDoc, Types} from "mongoose";
+import { ITask } from "./Task";
 
-export type ProjectType = Document & {
+export interface IProject extends Document {
     projectName: string;
     clientName: string;
     description: string;
+    tasks: PopulatedDoc<ITask & Document>[]; // This is an array of tasks
 }
 
-const ProjectSchema: Schema = new Schema({
+export const ProjectSchema: Schema = new Schema({
     projectName: { 
         type: String,
         required: true,
@@ -21,9 +23,15 @@ const ProjectSchema: Schema = new Schema({
         type: String,
         required: true,
         trim: true,
-    }
- });
+    },
+    tasks:[
+        {
+            type: Types.ObjectId,
+            ref: "Task", //Name of the collection in the database
+        }
+    ]
+ },{ timestamps: true });
 
-const Project = mongoose.model<ProjectType>('Project', ProjectSchema); // Project is the name of the collection in the database
+const Project = mongoose.model<IProject>('Project', ProjectSchema); // Project is the name of the collection in the database
 
 export default Project
