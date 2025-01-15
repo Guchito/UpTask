@@ -6,9 +6,15 @@
   "scripts": {
     "dev": "nodemon --exec ts-node src/index.ts"
   },
-  "keywords": [],
+  "keywords": ["backend", "typescript", "express"],
   "author": "Agustin Gaggero",
   "license": "ISC",
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Guchito/UpTask.git"
+  },
+
   "dependencies": {
     "colors": "^1.4.0",
     "dotenv": "^16.4.7",
