@@ -50,8 +50,10 @@ router.delete('/:id',
 );
 
 //Routes for tasks
+
+router.param('projectId',validateProjectExists) //This middleware will check if the project exists before continuing with the request, every time the parameter projectId is present in the URL.
+
 router.post('/:projectId/tasks',
-    validateProjectExists,
     body('name')
         .notEmpty().withMessage('Task name is required'),
     body('description')
@@ -61,15 +63,43 @@ router.post('/:projectId/tasks',
 )
 
 router.get('/:projectId/tasks',
-    validateProjectExists,
     TaskController.getProjectTasks
 
 )
 
 router.get('/:projectId/tasks/:taskId',
-    validateProjectExists,
+    param('taskId')
+        .isMongoId().withMessage('Invalid task id'),
+    handleInputErrors,
     TaskController.getTaskById
 
 )
 
+router.put('/:projectId/tasks/:taskId',
+    param('taskId')
+        .isMongoId().withMessage('Invalid task id'),
+    body('name')
+        .notEmpty().withMessage('Task name is required'),
+    body('description')
+        .notEmpty().withMessage('Description is required'),
+    handleInputErrors,
+    TaskController.updateTask
+
+)
+
+router.delete('/:projectId/tasks/:taskId',
+    param('taskId')
+        .isMongoId().withMessage('Invalid project id'),
+    handleInputErrors,
+    TaskController.deleteTask
+)
+
+router.post('/:projectId/tasks/:taskId/status',
+    param('taskId')
+        .isMongoId().withMessage('Invalid project id'),
+    body('status')
+        .notEmpty().withMessage('Status is required'),
+    handleInputErrors,
+    TaskController.updateStatus
+)
 export default router;
