@@ -3,7 +3,8 @@ import { body, param } from 'express-validator';
 import { ProjectController } from '../controllers/ProjectController';
 import { handleInputErrors } from '../middleware/validation';
 import { TaskController } from '../controllers/TaskController';
-import { validateProjectExists } from '../middleware/project';
+import { projectExists } from '../middleware/project';
+import { taskBelongsToProject, taskExists } from '../middleware/task';
 
 
 const router = Router();
@@ -51,7 +52,7 @@ router.delete('/:id',
 
 //Routes for tasks
 
-router.param('projectId',validateProjectExists) //This middleware will check if the project exists before continuing with the request, every time the parameter projectId is present in the URL.
+router.param('projectId',projectExists) //This middleware will check if the project exists before continuing with the request, every time the parameter projectId is present in the URL.
 
 router.post('/:projectId/tasks',
     body('name')
@@ -66,6 +67,9 @@ router.get('/:projectId/tasks',
     TaskController.getProjectTasks
 
 )
+
+router.param('taskId',taskExists) //This middleware will check if the task exists before continuing with the request, every time the parameter taskId is present in the URL.
+router.param('taskId', taskBelongsToProject) //This middleware will check if the task belongs to the project before continuing with the request, every time the parameter taskId is present in the URL.
 
 router.get('/:projectId/tasks/:taskId',
     param('taskId')
