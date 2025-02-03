@@ -13,3 +13,7 @@ MVC
 REST API
 ---
 Express validator
+
+---
+Tailwind CSS
+ReactQuery
