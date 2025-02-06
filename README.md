@@ -16,4 +16,7 @@ Express validator
 
 ---
 Tailwind CSS
+Headless ui
+Hero Icons
 ReactQuery
+ZOD
