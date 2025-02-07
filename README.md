@@ -18,5 +18,9 @@ Express validator
 Tailwind CSS
 Headless ui
 Hero Icons
-ReactQuery
+React Query
 ZOD
+
+---
+axios
+react-toastify
