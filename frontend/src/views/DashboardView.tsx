@@ -31,7 +31,7 @@ export default function DashboardView() {
         {data.length ? (
           <ul
             role="list"
-            className="divide-y divide-gray-100 border border-gray-100 mt-10 bg-white shadow-lg mb-10" 
+            className="divide-y divide-gray-100 border border-gray-100 mt-10 bg-white shadow-lg"
           >
             {data.map((project) => (
               <li
@@ -83,7 +83,7 @@ export default function DashboardView() {
                         </Menu.Item>
                         <Menu.Item>
                           <Link
-                            to={``}
+                            to={`/projects/${project._id}/edit`}
                             className="block px-3 py-1 text-sm leading-6 text-gray-900"
                           >
                             Edit Project
