@@ -31,15 +31,7 @@ function CreateProjectViews() {
     <>
         <div className="max-w-3xl mx-auto">
             <h1 className="text-4xl font-black">Create project</h1>
-            <nav className='my-5'>
-            <Link
-                className='bg-purple-400 hover:bg-[#c026d3] px-10 py-3 font-bold text-white text-xl cursor-pointer transition-colors'
-                to='/'
-            
-            >Return to all projects</Link>
 
-            </nav>
-            
             <form
                 className="mt-10 bg-white shadow-lg p-10 rounded-lg"
                 onSubmit={handleSubmit(handleForm)}
@@ -55,6 +47,14 @@ function CreateProjectViews() {
                     className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white uppercase cursor-pointer transition-colors font-bold"
                 />
             </form>
+            <nav className='my-10'>
+            <Link
+                className='bg-purple-400 hover:bg-[#c026d3] px-10 py-3 font-bold text-white text-xl cursor-pointer transition-colors'
+                to='/'
+            
+            >Return to all projects</Link>
+
+            </nav>
         </div>
     </>
   )
