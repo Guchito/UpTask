@@ -3,7 +3,7 @@ import {useQuery} from '@tanstack/react-query'
 import { getProjectById } from "@/api/ProjectAPI";
 import EditProjectForm from "./EditProjectForm";
 
-function EditProjectView() {
+export default function EditProjectView() {
   const params = useParams();
   const projectId = params.projectId!
 
@@ -14,7 +14,6 @@ function EditProjectView() {
     
    if(isLoading) return "Loading..."
    if(isError) return <Navigate to="/404" />
-   if(data) return <EditProjectForm  data={data}/>  
+   if(data) return <EditProjectForm  data={data} projectId={projectId}/>  
 }
 
-export default EditProjectView
