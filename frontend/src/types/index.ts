@@ -1,6 +1,21 @@
 import { z } from 'zod'
 
-//** Project */
+/** Task */
+
+
+
+export const tasktSchema = z.object({
+    _id: z.string(),
+    name: z.string(),
+    description: z.string(),
+    project: z.string(),
+    status: z.enum(["pending", "onHold", "inProgress", "underReview", "completed"])
+})
+
+export type Task = z.infer<typeof tasktSchema>
+export type TaskFormData = Pick<Task, 'name' | 'description'>
+
+/** Project */
 export const projectSchema = z.object({
     _id: z.string(),
     projectName: z.string(),

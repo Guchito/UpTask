@@ -1,6 +1,9 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import TaskForm from './TaskForm';
+import { Task, TaskFormData } from '@/types';
 
 export default function AddTaskModal() {
     const navigate = useNavigate();
@@ -8,6 +11,16 @@ export default function AddTaskModal() {
     const queryParams = new URLSearchParams(location.search);
     const modalTask = queryParams.get('newTask');
     const show = modalTask ? true : false
+
+    const initiaValues : TaskFormData = {
+        name: '',
+        description: ''
+    }
+    const { register, handleSubmit, formState: { errors }} = useForm({defaultValues: initiaValues})
+
+    const handleCreateTask = (formData: TaskFormData) => {
+        console.log(formData)
+    }
     return (
         <>
             <Transition appear show={show} as={Fragment}>
@@ -46,6 +59,21 @@ export default function AddTaskModal() {
                                     <p className="text-xl font-bold"> Fill the form and add  {''}
                                         <span className="text-fuchsia-600">a new task</span>
                                     </p>
+                                    <form
+                                        className="mt-10 space-y-3"
+                                        onSubmit={handleSubmit(handleCreateTask)}
+                                        noValidate
+                                    >
+                                        <TaskForm 
+                                            register= {register}
+                                            errors={errors}
+                                        />
+                                        <input
+                                            type="submit"
+                                            value="Save task"
+                                            className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white uppercase cursor-pointer transition-colors font-bold"
+                                        />
+                                    </form>
 
                                 </Dialog.Panel>
                             </Transition.Child>
