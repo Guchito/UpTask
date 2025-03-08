@@ -21,8 +21,12 @@ export async function taskExists( req : Request , res : Response , next : NextFu
         req.task = task;
         next();
     }catch(error){
-        res.status(500).json({ error: 'There was an error' });
-    }
+        if (error.name === 'CastError' || error.message.includes('not found')) {
+            res.status(404).json({ error: 'Task not found' });
+          } else {
+            res.status(500).json({ error: 'There was an error' });
+          }
+        }
 }
 
 export function taskBelongsToProject( req : Request , res : Response , next : NextFunction ) {
