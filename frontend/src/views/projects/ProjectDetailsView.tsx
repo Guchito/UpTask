@@ -10,7 +10,7 @@ export default function ProjectDetailsView() {
     const params = useParams();
     const projectId = params.projectId!
     const { data, isLoading, isError } = useQuery({
-      queryKey: ["editProject", projectId],
+      queryKey: ["project", projectId],
       queryFn: () => getProjectById(projectId), //Need to make it an arrow function so i can pass projectId
     });
     if(isLoading) return "Loading..."
