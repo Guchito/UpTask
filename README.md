@@ -27,3 +27,7 @@ react-toastify
 
 ---
 morgan
+
+---
+bcrypt
+nodemailer
