@@ -14,7 +14,7 @@ export class AuthEmail {
             subject: 'UpTask - Please confirm your account',
             html: `<p>Hi ${user.name}, you have created an account in UpTask</p>
                 <p> Click here to <a href="">confirm your account</a> </p>
-                <p> and use thef following code: <b>${user.token}</b></p>
+                <p> and use the following code: <b>${user.token}</b></p>
                 <p> This code will expire in 10 minutes</p>
             
             `
