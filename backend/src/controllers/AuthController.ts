@@ -72,7 +72,17 @@ export class AuthController{
             if(!user){
                 const error = new Error("User not found");
                 res.status(404).json({error: error.message});
+                return
             }
+            //Check password
+            const isPasswordCorrect = await checkPassword(password, user.password)
+            if(!isPasswordCorrect){
+                const error = new Error("User or password incorrect");
+                res.status(401).json({error: error.message});
+                return
+            }
+
+            // Check if user is confirmed
             if(!user.confirmed){
                 const token = new Token()
                 token.user = user.id
@@ -88,19 +98,51 @@ export class AuthController{
 
                 const error = new Error("User not confirmed. A new confirmation email has been sent to your email");
                 res.status(401).json({error: error.message});
+                return
             }
 
-            //Check password
-            const isPasswordCorrect = await checkPassword(password, user.password)
-            if(!isPasswordCorrect){
-                const error = new Error("Invalid password");
-                res.status(401).json({error: error.message});
-            }
 
             res.send("Login successful");
 
         }catch(error){
             res.status(500).json({error: "there was an error creating the account"});
+        }
+    }
+
+    static requestConfirmationCode = async (req: Request, res: Response) =>{
+        try{
+            const { email } = req.body
+            // check if user exists
+            const user = await User.findOne({email})
+            if (!user){
+                const error = new Error("User not found");
+                res.status(404).json({error: error.message});
+                return
+            }else if(user.confirmed) {
+                const error = new Error("User already confirmed");
+                res.status(403).json({error: error.message});
+                return
+            }
+            
+            //Generate Token
+            const token = new Token()
+            token.token = generateToken()
+            token.user = user.id
+
+            //Send email
+            AuthEmail.sendConfirmationEmail({
+                email: user.email,
+                name: user.name,
+                token: token.token
+            })
+            
+            await Promise.allSettled([user.save(), token.save()])
+            
+            res.send("New token sent. Please check your email to confirm your account");
+            
+            
+        }catch(error){
+            res.status(500).json({error: "there was an error sending the token"});
         }
     }
 }
