@@ -139,7 +139,7 @@ export default function RegisterView() {
         <Link
           to="/auth/login"
           className="text-center text-gray-300 font-normal"
-        >Already have an account? Sign in</Link>
+        >Already have an account? Log in</Link>
 
       </nav>
     </>
