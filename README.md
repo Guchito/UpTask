@@ -31,3 +31,6 @@ morgan
 ---
 bcrypt
 nodemailer
+
+--
+JSON Web Token
