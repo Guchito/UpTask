@@ -15,6 +15,7 @@ export async function createProject(formData:ProjectFormData) {
 }
 
 export async function getProjects(){
+    
     try{
         const { data } = await api('/projects');
         const response = dashboardProjectSchema.safeParse(data)
