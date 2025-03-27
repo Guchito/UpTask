@@ -7,7 +7,8 @@ export interface IProject extends Document {
     clientName: string;
     description: string;
     tasks: PopulatedDoc<ITask & Document>[]; // This is an array of tasks
-    manager: PopulatedDoc<IUser & Document>
+    manager: PopulatedDoc<IUser & Document>;
+    team: PopulatedDoc<IUser & Document>[]; // This is an array of users.
 }
 
 export const ProjectSchema: Schema = new Schema({
@@ -35,7 +36,13 @@ export const ProjectSchema: Schema = new Schema({
     manager: {
         type: Types.ObjectId,
         ref: "User",
-    }
+    },
+    team:[
+        {
+            type: Types.ObjectId,
+            ref: "User", //Name of the collection in the database
+        }
+    ],
  },{ timestamps: true });
 
 const Project = mongoose.model<IProject>('Project', ProjectSchema); // Project is the name of the collection in the database
