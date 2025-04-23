@@ -10,8 +10,9 @@ import { toast } from "react-toastify"
 
 type TaskCardProps = {
   task: Task
+  canDelete: boolean
 }
-export default function TaskCard({task} : TaskCardProps) {
+export default function TaskCard({task, canDelete} : TaskCardProps) {
     
     const navigate = useNavigate()
     const params = useParams()
@@ -36,6 +37,7 @@ export default function TaskCard({task} : TaskCardProps) {
             <button
                 type="button"
                 className="font-bold text-xl text-slate-600 text-left"
+                onClick={() => navigate(location.pathname + `?viewTask=${task._id}`)}
             >{task.name}</button>
             <p className="text-slate-500">{task.description}</p>
         </div>
@@ -67,16 +69,19 @@ export default function TaskCard({task} : TaskCardProps) {
                                 Edit Task
                             </button>
                         </Menu.Item>
-
-                        <Menu.Item>
-                            <button 
-                                type='button' 
-                                className='block px-3 py-1 text-sm leading-6 text-red-500'
-                                onClick={() => mutate({projectId, taskId: task._id})}
-                            >
-                                Delete Task
-                            </button>
-                        </Menu.Item>
+                        {canDelete && (
+                            <>
+                                <Menu.Item>
+                                    <button 
+                                        type='button' 
+                                        className='block px-3 py-1 text-sm leading-6 text-red-500'
+                                        onClick={() => mutate({projectId, taskId: task._id})}
+                                    >
+                                        Delete Task
+                                    </button>
+                                </Menu.Item>
+                            </>
+                        )}
                     </Menu.Items>
                 </Transition>
             </Menu>
