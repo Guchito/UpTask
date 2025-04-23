@@ -5,8 +5,13 @@ import AddTaskModal from "@/components/tasks/AddTaskModal";
 import TaskList from "@/components/tasks/TaskList";
 import EditTaskData from "@/components/tasks/EditTaskData";
 import TaskModalDetails from "@/components/tasks/TaskModalDetails";
+import { useAuth } from "@/hooks/useAuth";
+import { isManager } from "@/utils/policies";
+import { useMemo } from "react";
 
 export default function ProjectDetailsView() {
+      const {data: user, isLoading: authLoading} = useAuth();
+
     const navigate = useNavigate();
     const params = useParams();
     const projectId = params.projectId!
@@ -14,12 +19,19 @@ export default function ProjectDetailsView() {
       queryKey: ["project", projectId],
       queryFn: () => getProjectById(projectId), //Need to make it an arrow function so i can pass projectId
     });
-    if(isLoading) return "Loading..."
+    
+    const canDelete = useMemo(() => data?.manager === user?._id , [data, user])
+
+    if(isLoading && authLoading) return "Loading..."
     if(isError) return <Navigate to="/404" />
-    if(data) return (
+
+
+    if(data && user) return (
     <>
         <h1 className="text-5xl font-black">{data.projectName}</h1>
         <p className="text-2xl font-light text-gray-500 mt-5">{data.description}</p>
+
+        
 
         <nav className="my-5 flex gap-3">
             <button
@@ -27,15 +39,18 @@ export default function ProjectDetailsView() {
                 className="bg-purple-400 hover:bg-[#c026d3] px-10 py-3 font-bold text-white text-xl cursor-pointer transition-colors"
                 onClick={() => navigate(location.pathname + '?newTask=true')}
             >Add task</button>
-            <Link
-                to={'team'}
-                className="bg-fuchsia-400 hover:bg-fuchsia-500 px-10 py-3 font-bold text-white text-xl cursor-pointer transition-colors"
-            >Team
-            </Link>
+            {isManager(data.manager, user._id) && (
+                <Link
+                    to={'team'}
+                    className="bg-fuchsia-400 hover:bg-fuchsia-500 px-10 py-3 font-bold text-white text-xl cursor-pointer transition-colors"
+                >Team
+                </Link>
+            )}
         </nav>
         
         <TaskList 
             tasks={data.tasks}
+            canDelete={canDelete}
         />
         <AddTaskModal />
         <EditTaskData />
