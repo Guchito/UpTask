@@ -77,6 +77,13 @@ git clone <https://github.com/Guchito/UpTask.git>
 cd UpTask
 ```
 
+### Full Inslall
+```
+npm run install:all
+```
+
+Or
+
 ### Backend Setup
 ```
 cd backend
@@ -109,11 +116,6 @@ API base (default): `http://localhost:4000/api`
 ```
 cd frontend
 npm install
-```
-
-If Axios base URL is environment driven, create `.env`:
-```
-VITE_API_URL=http://localhost:4000/api
 ```
 
 Run:
