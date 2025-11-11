@@ -37,6 +37,7 @@ export default function DeleteProjectModal() {
     onSuccess: (data) => {
       toast.success(data)
       queryClient.invalidateQueries({queryKey: ['projects']}) //forcing a new fetch
+      navigate(location.pathname, { replace: true })
     }
   });
 
